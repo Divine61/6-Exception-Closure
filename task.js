@@ -1,26 +1,24 @@
 ﻿// Задача 1
 
 function parseCount(products) {
-  if (Number.isNaN(Number.parseFloat(products))) {
+  let resultParse = Number.parseFloat(products);
+  if (Number.isNaN(resultParse)) {
     throw new Error(`Невалидное значение`);
   }
-  return Number.parseFloat(products);
+  return resultParse;
 }
 
 function validateCount(products) {
   try {
-    parseCount(products);
+    return parseCount(products);
   } catch(error) {
-    console.error(`Невалидное значение`);
+    return error;
   }
-  return parseCount(products);
 }
 
 // Задача 2
 
 class Triangle {
-  #perimeter;
-  #area;
   constructor(sideOne, sideTwo, sideThree) {
     if ( (sideOne + sideTwo) < sideThree || (sideTwo + sideThree) < sideOne || (sideOne + sideThree) < sideTwo) {
       throw new Error(`Треугольник с такими сторонами не существует`);
@@ -28,8 +26,6 @@ class Triangle {
     this.sideOne = sideOne;
     this.sideTwo = sideTwo;
     this.sideThree = sideThree;
-    this.#perimeter;
-    this.#area;
   }
   get perimeter() {
     return +(this.sideOne + this.sideTwo + this.sideThree);
@@ -44,9 +40,13 @@ function getTriangle(sideOne, sideTwo, sideThree) {
   try {
     return new Triangle(sideOne, sideTwo, sideThree);
   } catch(error) {
-    return {
-      perimeter: `Ошибка! Треугольник не существует`,
-      area: `Ошибка! Треугольник не существует`,
-    }
+      return {
+        get perimeter() {
+          return `Ошибка! Треугольник не существует`;
+        },
+        get area() {
+          return `Ошибка! Треугольник не существует`;
+        }
+      }
   }
 }
